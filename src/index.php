@@ -8,86 +8,9 @@
 <body class="font-sans">
 
   
-  <header class="bg-transparent shadow sticky top-0 z-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-16 items-center">
-      
-      <div class="flex items-center space-x-8">
-        <a href="#" class="text-orange-700 text-xl font-extrabold select-none">Petstore</a>
-        <nav class="hidden md:flex space-x-6 text-orange-600 font-medium">
-          <a href="#" class="hover:text-orange-800 transition">Home</a>
-          <a href="#" class="hover:text-orange-800 transition">Shop</a>
-          <a href="#" class="hover:text-orange-800 transition">Collection</a>
-          <a href="#" class="hover:text-orange-800 transition">Blogs</a>
-          <a href="#" class="hover:text-orange-800 transition">Contact</a>
-        </nav>
-      </div>
-
-      <!-- Right side: Icons -->
-      <div class="flex items-center space-x-6">
-        <!-- Search -->
-        <button aria-label="Search" class="text-orange-600 hover:text-orange-800 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2"
-            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="7" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-        </button>
-
-        <!-- User -->
-        <button aria-label="User Account" class="text-orange-600 hover:text-orange-800 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2"
-            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
-            <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
-        </button>
-
-        <!-- Cart -->
-        <button id="openCart" aria-label="Shopping Cart" class="text-orange-600 hover:text-orange-800 transition relative">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2"
-            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="9" cy="21" r="1" />
-            <circle cx="20" cy="21" r="1" />
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-          </svg>
-          <span
-            class="absolute -top-2 -right-2 bg-orange-600 text-white text-xs rounded-full px-1.5 py-0.5 font-bold">3</span>
-        </button>
-      </div>
-
-      <!-- Mobile menu button -->
-      <div class="md:hidden">
-        <button id="mobile-menu-btn" aria-label="Open menu" class="text-orange-600 hover:text-orange-800 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2"
-            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile menu -->
-  <nav id="mobile-menu" class="hidden md:hidden bg-orange-100 px-4 pt-4 pb-6 space-y-3 text-orange-600 font-medium">
-    <a href="#" class="block hover:text-orange-800 transition">Home</a>
-    <a href="#" class="block hover:text-orange-800 transition">Shop</a>
-    <a href="#" class="block hover:text-orange-800 transition">Collection</a>
-    <a href="#" class="block hover:text-orange-800 transition">Blogs</a>
-    <a href="#" class="block hover:text-orange-800 transition">Contact</a>
-  </nav>
-
-  <script>
-    const menuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
-  </script>
-</header>
+  <?php
+include 'header.php';
+?>
 
 
   <!-- Hero Section -->
@@ -120,15 +43,17 @@
     <h3 class="text-3xl font-bold text-center text-orange-700 mb-8">Shop by Category</h3>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
       <?php
-      include 'connection.php';
-      $rs=Database::search("SELECT * FROM categories");
-      while ($row = $rs->fetch_assoc()) {
-        echo '<div class="bg-white shadow p-4 rounded-lg text-center hover:scale-105 transition">';
-        echo '<img src="'.$row['image'].'" alt="'.$row['name'].'" class="w-full h-32 object-cover mx-auto mb-2">';
-        echo '<p class="mt-2 font-semibold">'.$row['name'].'</p>';
-        echo '</div>';
-      }
-      ?>
+include 'connection.php';
+$rs = Database::search("SELECT * FROM categories");
+while ($row = $rs->fetch_assoc()) {
+  echo '<a href="category.php?cat_id=' . $row['category_id'] . '" class="block">';
+  echo '<div class="bg-white shadow p-4 rounded-lg text-center hover:scale-105 transition">';
+  echo '<img src="' . $row['image'] . '" alt="' . $row['name'] . '" class="w-full h-32 object-cover mx-auto mb-2">';
+  echo '<p class="mt-2 font-semibold">' . $row['name'] . '</p>';
+  echo '</div>';
+  echo '</a>';
+}
+?>
       
     </div>
   </section>
@@ -217,82 +142,6 @@
   <footer class="bg-orange-200 py-4 text-center text-orange-800 text-sm">
     © 2025 PetZone. All rights reserved.
   </footer>
-  <!-- Cart Drawer -->
-  <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
-    <!-- Backdrop -->
-    <div id="backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"></div>
-
-    <!-- Drawer -->
-    <div class="absolute right-0 top-0 h-full w-full sm:max-w-md bg-gray-900/80 backdrop-blur-xl shadow-2xl border-l border-indigo-500/20 transition-transform duration-500 ease-in-out transform translate-x-full" id="drawerPanel">
-      <div class="p-6 flex flex-col h-full">
-        <!-- Header -->
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-semibold text-indigo-400">Your Cart</h2>
-          <button id="closeCart" class="text-gray-300 hover:text-red-400 text-xl">
-            ✕
-          </button>
-        </div>
-
-        <!-- Cart Items -->
-        <div class="flex-1 overflow-y-auto space-y-6">
-          <!-- Item -->
-          <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl shadow hover:scale-[1.01] transition">
-            <img src="https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-01.jpg" class="w-20 h-20 object-cover rounded-lg border border-indigo-500/30" />
-            <div class="flex-1">
-              <h4 class="font-semibold text-indigo-200">Hip Bag</h4>
-              <p class="text-gray-400 text-sm">Salmon Orange</p>
-              <p class="text-indigo-400 mt-1">$90.00</p>
-            </div>
-            <button class="text-sm text-red-400 hover:underline">Remove</button>
-          </div>
-
-          <!-- Item 2 -->
-          <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl shadow hover:scale-[1.01] transition">
-            <img src="https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-02.jpg" class="w-20 h-20 object-cover rounded-lg border border-indigo-500/30" />
-            <div class="flex-1">
-              <h4 class="font-semibold text-indigo-200">Satchel</h4>
-              <p class="text-gray-400 text-sm">Blue</p>
-              <p class="text-indigo-400 mt-1">$32.00</p>
-            </div>
-            <button class="text-sm text-red-400 hover:underline">Remove</button>
-          </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="mt-6 border-t border-indigo-500/20 pt-4">
-          <div class="flex justify-between mb-4 text-lg">
-            <span class="text-white">Subtotal</span>
-            <span class="text-indigo-300">$122.00</span>
-          </div>
-          <button class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg shadow transition">
-            Proceed to Checkout
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scripts -->
-  <script>
-    const openCartBtn = document.getElementById('openCart');
-    const closeCartBtn = document.getElementById('closeCart');
-    const cartDrawer = document.getElementById('cartDrawer');
-    const drawerPanel = document.getElementById('drawerPanel');
-    const backdrop = document.getElementById('backdrop');
-
-    openCartBtn.addEventListener('click', () => {
-      cartDrawer.classList.remove('hidden');
-      setTimeout(() => drawerPanel.classList.remove('translate-x-full'), 10);
-    });
-
-    function closeDrawer() {
-      drawerPanel.classList.add('translate-x-full');
-      setTimeout(() => cartDrawer.classList.add('hidden'), 500);
-    }
-
-    closeCartBtn.addEventListener('click', closeDrawer);
-    backdrop.addEventListener('click', closeDrawer);
-  </script>
-
+  <?php include 'cart.php'; ?>
 </body>
 </html>
