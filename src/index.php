@@ -119,18 +119,17 @@
   <section id="categories" class="max-w-7xl mx-auto py-12 px-6">
     <h3 class="text-3xl font-bold text-center text-orange-700 mb-8">Shop by Category</h3>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-      <div class="bg-white shadow p-4 rounded-lg text-center hover:scale-105 transition">
-        🐶 <p class="mt-2 font-semibold">Dogs</p>
-      </div>
-      <div class="bg-white shadow p-4 rounded-lg text-center hover:scale-105 transition">
-        🐱 <p class="mt-2 font-semibold">Cats</p>
-      </div>
-      <div class="bg-white shadow p-4 rounded-lg text-center hover:scale-105 transition">
-        🐰 <p class="mt-2 font-semibold">Rabbits</p>
-      </div>
-      <div class="bg-white shadow p-4 rounded-lg text-center hover:scale-105 transition">
-        🐦 <p class="mt-2 font-semibold">Birds</p>
-      </div>
+      <?php
+      include 'connection.php';
+      $rs=Database::search("SELECT * FROM categories");
+      while ($row = $rs->fetch_assoc()) {
+        echo '<div class="bg-white shadow p-4 rounded-lg text-center hover:scale-105 transition">';
+        echo '<img src="'.$row['image'].'" alt="'.$row['name'].'" class="w-full h-32 object-cover mx-auto mb-2">';
+        echo '<p class="mt-2 font-semibold">'.$row['name'].'</p>';
+        echo '</div>';
+      }
+      ?>
+      
     </div>
   </section>
 
