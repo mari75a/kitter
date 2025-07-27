@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $rs = Database::search("SELECT * FROM admins WHERE username = '$username'");
   if ($rs->num_rows == 1) {
     $admin = $rs->fetch_assoc();
-    if (password_verify($password, $admin['password'])) {
+    if ( $password === $admin['password']) {
       $_SESSION['admin'] = $admin['admin_id'];
       header("Location: dashboard.php");
       exit;
