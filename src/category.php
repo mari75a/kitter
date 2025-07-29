@@ -41,8 +41,8 @@ $products_rs = Database::search("SELECT * FROM products WHERE category_id = '$ca
 <?php
 if ($products_rs->num_rows > 0) {
   while ($product = $products_rs->fetch_assoc()) {
-    echo '<div class="bg-white rounded-xl shadow-md overflow-hidden hover:scale-105 transition">';
-    echo '  <img src="' . $product['image'] . '" alt="' . $product['name'] . '" class="w-full h-48 object-cover">';
+    echo '<div class="bg-white rounded-xl shadow-md overflow-hidden hover:scale-105 h-100 transition">';
+    echo '  <img src="' . $product['image'] . '" alt="' . $product['name'] . '" class=" h-40 object-cover allign-center mx-auto mb-2">';
     echo '  <div class="p-4 text-center">';
     echo '    <h3 class="text-lg font-semibold text-gray-800">' . $product['name'] . '</h3>';
     echo '    <p class="text-sm text-gray-500">' . substr($product['description'], 0, 60) . '...</p>';

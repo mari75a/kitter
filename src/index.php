@@ -47,8 +47,8 @@ include 'connection.php';
 $rs = Database::search("SELECT * FROM categories");
 while ($row = $rs->fetch_assoc()) {
   echo '<a href="category.php?cat_id=' . $row['category_id'] . '" class="block">';
-  echo '<div class="bg-white shadow p-4 rounded-lg text-center hover:scale-105 transition">';
-  echo '<img src="' . $row['image'] . '" alt="' . $row['name'] . '" class="w-full h-32 object-cover mx-auto mb-2">';
+  echo '<div class="bg-white shadow p-4 rounded-lg text-center hover:scale-105 h-60 transition">';
+  echo '<img src="' . $row['image'] . '" alt="' . $row['name'] . '" class=" h-40   mx-auto mb-2">';
   echo '<p class="mt-2 font-semibold">' . $row['name'] . '</p>';
   echo '</div>';
   echo '</a>';
@@ -139,9 +139,11 @@ while ($row = $rs->fetch_assoc()) {
 </section>
 
   <!-- Footer -->
-  <footer class="bg-orange-200 py-4 text-center text-orange-800 text-sm">
-    © 2025 PetZone. All rights reserved.
-  </footer>
+  <footer class="text-center text-sm text-gray-400 py-6">
+  &copy; 2025 Kitter. All rights reserved.
+  <br>
+  <a href="admin/login.php" class="text-indigo-500 hover:underline">Admin Login</a>
+</footer>
   <?php include 'cart.php'; ?>
 </body>
 </html>

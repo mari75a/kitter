@@ -7,7 +7,7 @@ if (!isset($_SESSION['admin'])) {
 }
 
 include '../connection.php';
-$rs = Database::search("SELECT * FROM orders ORDER BY ordered_at DESC");
+$rs = Database::search("SELECT * FROM orders ORDER BY created_at DESC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
