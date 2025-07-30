@@ -1,5 +1,4 @@
 <?php
-// categories.php
 session_start();
 if (!isset($_SESSION['admin'])) {
   header("Location: login.php");
@@ -7,14 +6,39 @@ if (!isset($_SESSION['admin'])) {
 }
 include '../connection.php';
 
-$result = Database::search("SELECT * FROM categories ORDER BY category_id DESC");
-?>
+// Fetch real-time stats from DB
+$totalSales = 0.00;
+$orderCount = 0;
+$productCount = 0;
+$customerCount = 0;
 
+$salesResult = Database::search("SELECT SUM(total) AS total_sales FROM orders");
+if ($row = $salesResult->fetch_assoc()) {
+  $totalSales = $row['total_sales'] ?? 0;
+}
+
+$orderResult = Database::search("SELECT COUNT(*) AS total_orders FROM orders");
+$orderCount = $orderResult->fetch_assoc()['total_orders'] ?? 0;
+
+$productResult = Database::search("SELECT COUNT(*) AS total_products FROM products");
+$productCount = $productResult->fetch_assoc()['total_products'] ?? 0;
+
+$customerResult = Database::search("SELECT COUNT(DISTINCT user_id) AS total_customers FROM orders");
+$customerCount = $customerResult->fetch_assoc()['total_customers'] ?? 0;
+
+// Handle deletion
+if (isset($_GET['delete'])) {
+  $deleteId = intval($_GET['delete']);
+  Database::iud("DELETE FROM categories WHERE id='$deleteId'");
+  header("Location: categories.php");
+  exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Categories | Kitter</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -50,21 +74,21 @@ $result = Database::search("SELECT * FROM categories ORDER BY category_id DESC")
               <th class="py-3 px-6 text-left text-sm font-semibold text-gray-600">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            <?php while ($cat = $result->fetch_assoc()): ?>
-              <tr class="border-b hover:bg-gray-100">
-                <td class="py-3 px-6 text-sm text-gray-700">#<?= $cat['category_id'] ?></td>
-                <td class="py-3 px-6 text-sm font-medium text-gray-800"><?= $cat['name'] ?></td>
-                <td class="py-3 px-6">
-                  <img src="../<?= $cat['image'] ?>" class="w-16 h-16 object-cover rounded" alt="<?= $cat['name'] ?>">
-                </td>
-                <td class="py-3 px-6">
-                  <a href="edit-category.php?id=<?= $category['id'] ?>" class="text-blue-600 hover:underline text-sm mr-3">Edit</a>
-<a href="delete-category.php?id=<?= $category['id'] ?>" onclick="return confirm('Are you sure you want to delete this category?');" class="text-red-600 hover:underline text-sm">Delete</a>
-
-                </td>
-              </tr>
-            <?php endwhile; ?>
+          <tbody class="text-gray-700">
+            <?php
+            $rs = Database::search("SELECT * FROM categories ORDER BY category_id DESC");
+            while ($category = $rs->fetch_assoc()) {
+              echo '<tr class="border-b hover:bg-gray-100">';
+              echo '<td class="py-3 px-6">' . $category['category_id'] . '</td>';
+              echo '<td class="py-3 px-6">' . htmlspecialchars($category['name']) . '</td>';
+              echo '<td class="py-3 px-6"><img src="../' . htmlspecialchars($category['image']) . '" class="w-16 h-16 object-cover rounded" alt="' . htmlspecialchars($category['name']) . '"></td>';
+              echo '<td class="py-3 px-6">';
+              echo '<a href="edit-category.php?id=' . $category['category_id'] . '" class="text-blue-600 hover:underline text-sm mr-3">Edit</a>';
+              echo '<a href="?delete=' . $category['category_id'] . '" onclick="return confirm(\'Are you sure you want to delete this category?\');" class="text-red-600 hover:underline text-sm">Delete</a>';
+              echo '</td>';
+              echo '</tr>';
+            }
+            ?>
           </tbody>
         </table>
       </div>

@@ -7,7 +7,7 @@ if (!isset($_SESSION['admin'])) {
 }
 
 include '../connection.php';
-$rs = Database::search("SELECT * FROM orders ORDER BY created_at DESC");
+$rs = Database::search("SELECT * FROM orders inner join users on orders.user_id = users.id ORDER BY ordered_at DESC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +52,7 @@ $rs = Database::search("SELECT * FROM orders ORDER BY created_at DESC");
             <?php while ($order = $rs->fetch_assoc()): ?>
             <tr class="hover:bg-gray-50">
               <td class="px-4 py-3 font-semibold">#<?= $order['order_id'] ?></td>
-              <td class="px-4 py-3"><?= htmlspecialchars($order['customer_name']) ?></td>
+              <td class="px-4 py-3"><?= htmlspecialchars($order['name']) ?></td>
               <td class="px-4 py-3"><?= htmlspecialchars($order['email']) ?></td>
               <td class="px-4 py-3 text-green-600 font-medium">$<?= number_format($order['total'], 2) ?></td>
               <td class="px-4 py-3 text-gray-500"><?= date('Y-m-d', strtotime($order['ordered_at'])) ?></td>
