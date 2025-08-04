@@ -112,7 +112,7 @@
     <img src="img/bed2.jpg" class="snap-start rounded-lg shadow-md">
     <img src="img/cat.jpeg" class="snap-start rounded-lg shadow-md">
     <img src="img/food.jpeg" class="snap-start rounded-lg shadow-md">
-    <img src="https://source.unsplash.com/300x200/?parrot" class="snap-start rounded-lg shadow-md">
+    <img src="img/bed1.jpeg" class="snap-start rounded-lg shadow-md">
   </div>
 </section>
 

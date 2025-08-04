@@ -5,7 +5,7 @@
       <div class="flex items-center space-x-8">
         <a href="#" class="text-orange-700 text-xl font-extrabold select-none">Petstore</a>
         <nav class="hidden md:flex space-x-6 text-orange-600 font-medium">
-          <a href="#" class="hover:text-orange-800 transition">Home</a>
+          <a href="index.php" class="hover:text-orange-800 transition">Home</a>
           <a href="#" class="hover:text-orange-800 transition">Shop</a>
           <a href="#" class="hover:text-orange-800 transition">Collection</a>
           <a href="#" class="hover:text-orange-800 transition">Blogs</a>
@@ -25,7 +25,8 @@
         </button>
 
         <!-- User -->
-        <button aria-label="User Account" class="text-orange-600 hover:text-orange-800 transition">
+         <a href="login.php">
+          <button aria-label="User Account" class="text-orange-600 hover:text-orange-800 transition">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2"
             viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
@@ -33,6 +34,8 @@
             <circle cx="12" cy="7" r="4" />
           </svg>
         </button>
+         </a>
+        
 
         <!-- Cart -->
         <button id="openCart" aria-label="Shopping Cart" class="text-orange-600 hover:text-orange-800 transition relative">

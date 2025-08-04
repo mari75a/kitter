@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $total = $_POST['total'];
 
   // Insert order
-  Database::iud("INSERT INTO orders (customer_name, email, address, total, ordered_at) VALUES ('$name', '$email', '$address', '$total', NOW())");
+  Database::iud("INSERT INTO orders (user_id,user_name, email, address, total, ordered_at) VALUES ('{$_SESSION['id']}', '$name', '$email', '$address', '$total', NOW())");
   $order_id = Database::$connection->insert_id;
 
   // Insert order items
